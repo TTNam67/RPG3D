@@ -6,21 +6,28 @@ using UnityEngine.AI;
 public class Mover : MonoBehaviour
 {
     [SerializeField] Transform _target;
-    Ray _lastRay;
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _lastRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            MoveToCursor();     
         }
 
-        Debug.DrawRay(_lastRay.origin, _lastRay.direction * 100, new Color(0.3f, 0.4f, 0.6f, 1f));
-        GetComponent<NavMeshAgent>().destination = _target.position;
+    }
+
+    private void MoveToCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // "out" giống với "ref" nhưng có khác đôi chút. Tra chatGPT để biết thêm
+        bool hasHit = Physics.Raycast(ray, out hit); //Has hit or not?
+
+        if (hasHit == true)
+        {
+            GetComponent<NavMeshAgent>().destination = hit.point;
+        }
     }
 }
+
 
