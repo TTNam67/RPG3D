@@ -8,7 +8,7 @@ public class Mover : MonoBehaviour
     [SerializeField] Transform _target;
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             MoveToCursor();     
         }
@@ -33,8 +33,11 @@ public class Mover : MonoBehaviour
     private void UpdateAnimator()
     {
         Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
-        Vector3 localVelocity = transform.InverseTransformDirection(velocity);  
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);  //Transforms a direction from world space to local space
         float speed = localVelocity.z;
         GetComponent<Animator>().SetFloat("forwardSpeed", speed);
     }
 }
+
+
+
