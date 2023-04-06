@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour
+    public class Fighter : MonoBehaviour, IAction
     {
         Transform _target;
         Mover _mover;
@@ -17,18 +18,19 @@ namespace RPG.Combat
             if (_mover == null)    
                 Debug.LogWarning("Fighter.cs: Mover is not found!");
         }
+
         void Update()
         {
             if (_target == null) return;
 
-            if (_target != null && !GetIsInRange())
-            {
-                _mover.MoveTo(_target.position);
-            }
-            else
-            {
-                _mover.Stop();
-            }
+            // if (_target != null && !GetIsInRange())
+            // {
+            //     _mover.MoveTo(_target.position);
+            // }
+            // else
+            // {
+            //     _mover.Cancel();
+            // }
 
 
         }
@@ -40,6 +42,7 @@ namespace RPG.Combat
 
         public void Attack(CombatTarget combatTarget)
         {
+            GetComponent<ActionScheduler>().StartAction(this);
             _target = combatTarget.transform;
         }
 
@@ -47,5 +50,8 @@ namespace RPG.Combat
         {
             _target = null;
         }
+
     }
+
+    
 }

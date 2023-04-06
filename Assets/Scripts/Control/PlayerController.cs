@@ -36,8 +36,6 @@ namespace RPG.Control
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
 
-                Debug.Log("Something" + Time.deltaTime);
-
                 // Is left mouse clicked
                 if (Input.GetMouseButtonDown(0))
                 {

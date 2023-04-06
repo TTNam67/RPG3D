@@ -1,11 +1,11 @@
-using RPG.Combat;
+using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 
 // Responsible for controlling the nav mesh agent
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IAction
     {
         
 
@@ -24,20 +24,21 @@ namespace RPG.Movement
             UpdateAnimator();
 
         }
-        public void Stop()
+        public void Cancel()
         {
             _navMeshAgent.isStopped = true;
         }
         
-        public void StartMoveAction(Vector3 _destination)
+        public void StartMoveAction(Vector3 destination)
         {
-            GetComponent<Fighter>().Cancel();
-            MoveTo(_destination);
+            GetComponent<ActionScheduler>().StartAction(this);
+            // GetComponent<Fighter>().Cancel();
+            MoveTo(destination);
         }
 
-        public void MoveTo(Vector3 _destination)
+        public void MoveTo(Vector3 destination)
         {
-            _navMeshAgent.destination = _destination;
+            _navMeshAgent.destination = destination;
             _navMeshAgent.isStopped = false;
         }
 
