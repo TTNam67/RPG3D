@@ -32,6 +32,7 @@ namespace RPG.Control
             {
                 // Nếu con trỏ chuột hover vào 1 object có chứa
                 // CombatTarget (có thể bị chọn làm mục tiêu tấn công)
+                // và click chuột trái vào đó thì sẽ phát lệnh cho Player tấn công
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
 
