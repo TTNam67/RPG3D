@@ -16,6 +16,7 @@ namespace RPG.Combat
         [SerializeField] private float _weaponRange = 2.0f;
         [SerializeField] private float _timeBetweenAttacks = 1.0f;
         float _timeSinceLastAttack = 0.0f;
+        float _punchDamage = 5f;
 
         private void Start() 
         {
@@ -53,10 +54,22 @@ namespace RPG.Combat
         {
             if (_timeSinceLastAttack > _timeBetweenAttacks)
             {
+                // This will trigger the Hit() event
                 _animator.SetTrigger(a_Attack);
                 _timeSinceLastAttack = 0.0f;
+                
+
             }
 
+        }
+
+        void Hit()
+        {
+            Health healthComponent = _target.GetComponent<Health>();
+            if (healthComponent == null)
+                Debug.LogError("Fighter.cs: Target's health component is not found");
+
+            healthComponent.TakeDamage(_punchDamage);
         }
 
         private bool GetIsInRange()
@@ -76,10 +89,7 @@ namespace RPG.Combat
         }
 
         // Animation event
-        void Hit()
-        {
 
-        }
 
     }
 
