@@ -10,28 +10,52 @@ namespace RPG.Combat
     {
         Transform _target;
         Mover _mover;
+        ActionScheduler _actionScheduler;
+        Animator _animator;
+        string a_Attack = "attack";
         [SerializeField] private float _weaponRange = 2.0f;
+        [SerializeField] private float _timeBetweenAttacks = 1.0f;
+        float _timeSinceLastAttack = 0.0f;
 
         private void Start() 
         {
             _mover = GetComponent<Mover>();
             if (_mover == null)    
                 Debug.LogWarning("Fighter.cs: Mover is not found!");
+
+            _animator = GetComponent<Animator>();
+            if (_animator == null)
+                Debug.LogWarning("Fighter.cs: Animator is not found!");
+
+            _actionScheduler = GetComponent<ActionScheduler>();
+            if (_actionScheduler == null)
+                Debug.LogWarning("Fighter.cs: ActionScheduler is not found!");            
         }
 
         void Update()
         {
+            _timeSinceLastAttack += Time.deltaTime;
             if (_target == null) return;
+            if (!GetIsInRange())
+            {
+                _mover.MoveTo(_target.position);
+            }
+            else
+            {
+                _mover.Cancel();
+                AttackBehaviour();
+            }
 
-            // if (_target != null && !GetIsInRange())
-            // {
-            //     _mover.MoveTo(_target.position);
-            // }
-            // else
-            // {
-            //     _mover.Cancel();
-            // }
 
+        }
+
+        private void AttackBehaviour()
+        {
+            if (_timeSinceLastAttack > _timeBetweenAttacks)
+            {
+                _animator.SetTrigger(a_Attack);
+                _timeSinceLastAttack = 0.0f;
+            }
 
         }
 
@@ -42,7 +66,7 @@ namespace RPG.Combat
 
         public void Attack(CombatTarget combatTarget)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
+            _actionScheduler.StartAction(this);
             _target = combatTarget.transform;
         }
 
@@ -51,7 +75,12 @@ namespace RPG.Combat
             _target = null;
         }
 
+        // Animation event
+        void Hit()
+        {
+
+        }
+
     }
 
-    
 }
