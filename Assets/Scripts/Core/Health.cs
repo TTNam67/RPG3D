@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.Core
 {
     public class Health : MonoBehaviour
     {
         [SerializeField] private float _healthPoint = 50f;
         Animator _animator;
+        ActionScheduler _actionScheduler;
         string a_die = "die";
         bool _isDead = false;
 
@@ -22,6 +23,10 @@ namespace RPG.Combat
             _animator = GetComponent<Animator>();
             if (_animator == null)
                 Debug.LogWarning("Health.cs: Animator is not found!");
+
+            _actionScheduler = GetComponent<ActionScheduler>();
+            if (_actionScheduler == null)
+                Debug.LogWarning("Health.cs: ActionScheduler is not found");
         }
 
         public void TakeDamage(float damage)
@@ -37,8 +42,10 @@ namespace RPG.Combat
         {
             if (_isDead) return;
             _isDead = true;
-
             _animator.SetTrigger(a_die);
+
+            // When you die, any running action is eliminated 
+            _actionScheduler.CancelCurrentAction();
         }
     }
 }

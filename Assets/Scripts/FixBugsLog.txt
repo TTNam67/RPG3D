@@ -6,3 +6,6 @@ player sẽ phải đợi thêm 1 khoảng "_timeBetweenAttacks" thì mới t
 
 + Tăng giá trị của "_timeBetweenAttacks" lên 1 chút (3-4s) thì sẽ nhìn thấy bug 
 này rõ hơn
+
+- Bug 2:
++ Player và Enemy khi chết vẫn dy chuyển xung quanh được, enemy vẫn bám theo player

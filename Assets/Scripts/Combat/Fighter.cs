@@ -14,10 +14,10 @@ namespace RPG.Combat
         Animator _animator;
         string a_attack = "attack", a_stopAttack = "stopAttack";
         [SerializeField] private float _weaponRange = 2.0f;
-        [SerializeField] private float _timeBetweenAttacks = 1.0f;
+        [SerializeField] private float _timeBetweenAttacks = 0.8f;
         [SerializeField] private float _punchDamage = 5f;
 
-        float _timeSinceLastAttack = 0.0f;
+        float _timeSinceLastAttack = Mathf.Infinity;
 
         private void Start() 
         {
@@ -62,8 +62,6 @@ namespace RPG.Combat
             {
                 TriggerAttack();
                 _timeSinceLastAttack = 0.0f;
-
-
             }
 
         }
@@ -88,8 +86,6 @@ namespace RPG.Combat
 
         public bool CanAttack(GameObject combatTarget)
         {
-
-
             if (combatTarget == null)
             {
                 return false;
@@ -104,10 +100,8 @@ namespace RPG.Combat
         }
 
         public void Attack(GameObject combatTarget)
-        {
-            
-            _actionScheduler.StartAction(this);
-            
+        {  
+            _actionScheduler.StartAction(this);   
             _target = combatTarget.GetComponent<Health>();
         }
 

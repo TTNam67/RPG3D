@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using RPG.Combat;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Control
@@ -10,6 +11,7 @@ namespace RPG.Control
         [SerializeField] private float _chaseDistance = 5f;
         Fighter _fighter;
         GameObject _player;
+        Health _health;
 
         private void Start() 
         {
@@ -20,10 +22,19 @@ namespace RPG.Control
             _player = GameObject.FindWithTag("Player");
             if (_player == null)
                 Debug.LogWarning("AIController.cs: Player is not found");
+
+            _health = GetComponent<Health>();
+            if (_health == null)
+                Debug.LogWarning("AIController.cs: Health is not found");
         }
 
         private void Update()
         {
+            if (_health.IsDead() == true)
+            {
+                return;
+            }
+
             if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
             {
                 _fighter.Attack(_player);

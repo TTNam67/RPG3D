@@ -8,11 +8,11 @@ namespace RPG.Movement
     public class Mover : MonoBehaviour, IAction
     {
         
-
         Transform _target;
         NavMeshAgent _navMeshAgent;
         ActionScheduler _actionScheduler; 
         Animator _animator;
+        Health _health;
 
         private void Start()
         {
@@ -27,10 +27,15 @@ namespace RPG.Movement
             _animator = GetComponent<Animator>();
             if (_animator == null)
                 Debug.LogWarning("Mover.cs: Animator is not found!");
+
+            _health = GetComponent<Health>();
+            if (_health == null)
+                Debug.LogWarning("Mover.cs: Health is not found!");
         }
 
         void Update()
         {
+            _navMeshAgent.enabled = !_health.IsDead();
 
             UpdateAnimator();
 

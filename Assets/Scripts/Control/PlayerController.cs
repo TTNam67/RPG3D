@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using RPG.Combat;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace RPG.Control
 
         Fighter _fighter;
         Mover _mover;
+        Health _health;
         void Start()
         {
             _fighter = GetComponent<Fighter>();
@@ -22,10 +24,16 @@ namespace RPG.Control
             _mover = GetComponent<Mover>();
             if (_mover == null)
                 Debug.LogWarning("PlayerController.cs: Mover is not found");
+
+            _health = GetComponent<Health>();
+            if (_health == null)
+                Debug.LogWarning("PlayerController.cs: Health is not found");
         }
 
         void Update()
         {
+            if (_health.IsDead() == true) return;
+
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
 
