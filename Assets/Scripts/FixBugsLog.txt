@@ -1,0 +1,8 @@
+- Bug 1: 
++ Khi player đang trong animation "Attack" mà player click ra ngoài (với mục đích di chuyển)
+thì trigger "stopAttack" trong Animator "Character" sẽ được kích hoạt. Sự kích hoạt cứ 
+được giữ mãi như thế. Cho tới khi player click vào 1 enemy, nhưng khi đi tới "weaponRange"
+player sẽ phải đợi thêm 1 khoảng "_timeBetweenAttacks" thì mới thực hiện "Attack" được
+
++ Tăng giá trị của "_timeBetweenAttacks" lên 1 chút (3-4s) thì sẽ nhìn thấy bug 
+này rõ hơn

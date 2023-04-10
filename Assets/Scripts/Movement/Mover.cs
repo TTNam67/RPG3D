@@ -9,21 +9,33 @@ namespace RPG.Movement
     {
         
 
-        [SerializeField] Transform _target;
+        Transform _target;
         NavMeshAgent _navMeshAgent;
+        ActionScheduler _actionScheduler; 
+        Animator _animator;
 
         private void Start()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             if (_navMeshAgent == null)
                 Debug.LogWarning("Mover.cs: NavMeshAgent is not found!");
+
+            _actionScheduler = GetComponent<ActionScheduler>();
+            if (_actionScheduler == null)
+                Debug.LogWarning("Mover.cs: ActionScheduler is not found!");
+
+            _animator = GetComponent<Animator>();
+            if (_animator == null)
+                Debug.LogWarning("Mover.cs: Animator is not found!");
         }
+
         void Update()
         {
 
             UpdateAnimator();
 
         }
+
         public void Cancel()
         {
             _navMeshAgent.isStopped = true;
@@ -31,8 +43,7 @@ namespace RPG.Movement
         
         public void StartMoveAction(Vector3 destination)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
-            // GetComponent<Fighter>().Cancel();
+            _actionScheduler.StartAction(this);
             MoveTo(destination);
         }
 
@@ -47,7 +58,7 @@ namespace RPG.Movement
             Vector3 velocity = _navMeshAgent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);  //Transforms a direction from world space to local space
             float speed = localVelocity.z;
-            GetComponent<Animator>().SetFloat("forwardSpeed", speed);
+            _animator.SetFloat("forwardSpeed", speed);
         }
     }
 

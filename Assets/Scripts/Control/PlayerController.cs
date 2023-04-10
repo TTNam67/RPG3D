@@ -35,13 +35,12 @@ namespace RPG.Control
         private bool InteractWithCombat()
         {
             //hits: danh sách các RaycastHit được tạo ra từ việc 1 Ray (xuất phát từ
-            // bàn phím) va chạm với các GameObject trên đường đi của nó
+            // camera) va chạm với các GameObject trên đường đi của nó
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
                 // Nếu con trỏ chuột hover vào 1 object có chứa
-                // CombatTarget (có thể bị chọn làm mục tiêu tấn công)
-                // và click chuột trái vào đó thì sẽ phát lệnh cho Player tấn công
+                // CombatTarget và click chuột trái vào đó thì sẽ phát lệnh cho Player tấn công
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 
                 // Nếu ta "Can't Attack" mà Raycast va phải thì ta bỏ qua và xét tới các object đằng sau nó
@@ -55,7 +54,6 @@ namespace RPG.Control
                 {
                     // Attack if it is 
                     _fighter.Attack(target); //Get our sibling component
-                    
                 }
 
                 // If there is at least 1 CombatTarget on the way, return true

@@ -16,9 +16,6 @@ namespace RPG.Core
                 
             }
             _currentAction = action;
-            
-
-
         }
 
         void Update()

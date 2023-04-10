@@ -15,7 +15,7 @@ namespace RPG.Combat
         string a_attack = "attack", a_stopAttack = "stopAttack";
         [SerializeField] private float _weaponRange = 2.0f;
         [SerializeField] private float _timeBetweenAttacks = 1.0f;
-        [SerializeField] float _punchDamage = 5f;
+        [SerializeField] private float _punchDamage = 5f;
 
         float _timeSinceLastAttack = 0.0f;
 
@@ -59,17 +59,24 @@ namespace RPG.Combat
 
             if (_timeSinceLastAttack > _timeBetweenAttacks)
             {
-                // This will trigger the Hit() event
-                _animator.SetTrigger(a_attack);
+                TriggerAttack();
                 _timeSinceLastAttack = 0.0f;
-                
+
 
             }
 
         }
 
+        private void TriggerAttack()
+        {
+            _animator.ResetTrigger(a_stopAttack); // Dùng để fix bug 1
+            // This will trigger the Hit() event
+            _animator.SetTrigger(a_attack);
+        }
+
         void Hit()
         {
+            if (_target == null) return;
             _target.TakeDamage(_punchDamage);
         }
 
@@ -80,7 +87,8 @@ namespace RPG.Combat
 
         public bool CanAttack(CombatTarget combatTarget)
         {
-            
+
+
             if (combatTarget == null)
             {
                 return false;
@@ -96,14 +104,22 @@ namespace RPG.Combat
 
         public void Attack(CombatTarget combatTarget)
         {
+            
             _actionScheduler.StartAction(this);
+            
             _target = combatTarget.GetComponent<Health>();
         }
 
         public void Cancel()
         {
-            _animator.SetTrigger(a_stopAttack);
+            StopAttack();
             _target = null;
+        }
+
+        private void StopAttack()
+        {
+            _animator.ResetTrigger(a_attack);
+            _animator.SetTrigger(a_stopAttack);
         }
 
         // Animation event
