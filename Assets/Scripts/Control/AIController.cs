@@ -50,6 +50,14 @@ namespace RPG.Control
             float distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
             return distanceToPlayer < _chaseDistance;
         }
-    }
 
+        //Called by Unity
+        //Only draw when the object is selected
+        private void OnDrawGizmosSelected() 
+        {
+            Gizmos.color = Color.grey;
+            Gizmos.DrawWireSphere(transform.position, _chaseDistance);
+        } 
+    }
 }
+
