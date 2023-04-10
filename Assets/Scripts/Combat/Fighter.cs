@@ -12,7 +12,7 @@ namespace RPG.Combat
         Mover _mover;
         ActionScheduler _actionScheduler;
         Animator _animator;
-        string a_Attack = "attack";
+        string a_attack = "attack";
         [SerializeField] private float _weaponRange = 2.0f;
         [SerializeField] private float _timeBetweenAttacks = 1.0f;
         [SerializeField] float _punchDamage = 5f;
@@ -56,7 +56,7 @@ namespace RPG.Combat
             if (_timeSinceLastAttack > _timeBetweenAttacks)
             {
                 // This will trigger the Hit() event
-                _animator.SetTrigger(a_Attack);
+                _animator.SetTrigger(a_attack);
                 _timeSinceLastAttack = 0.0f;
                 
 
