@@ -49,13 +49,13 @@ namespace RPG.Combat
                 _mover.Cancel();
                 AttackBehaviour();
             }
-
-
         }
+
+        
 
         private void AttackBehaviour()
         {
-            transform.LookAt(_target.transform);
+            transform.LookAt(_target.transform, Vector3.up);
 
             if (_timeSinceLastAttack > _timeBetweenAttacks)
             {
@@ -76,6 +76,22 @@ namespace RPG.Combat
         private bool GetIsInRange()
         {
             return Vector3.Distance(_target.transform.position, transform.position) <= _weaponRange;
+        }
+
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            
+            if (combatTarget == null)
+            {
+                return false;
+            }
+
+            Health targetToTest = combatTarget.GetComponent<Health>();
+
+            // Nếu object ta click vào không có Health component (terrain,..)
+            // hoặc có Health component nhưng đã "chết"
+            // thì trả về false -> Can't Attack
+            return targetToTest != null && !targetToTest.IsDead();
         }
 
         public void Attack(CombatTarget combatTarget)

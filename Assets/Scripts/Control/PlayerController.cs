@@ -10,9 +10,18 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
+
+        Fighter _fighter;
+        Mover _mover;
         void Start()
         {
+            _fighter = GetComponent<Fighter>();
+            if (_fighter == null)
+                Debug.LogWarning("PlayerController.cs: Fighter is not found");
 
+            _mover = GetComponent<Mover>();
+            if (_mover == null)
+                Debug.LogWarning("PlayerController.cs: Mover is not found");
         }
 
         void Update()
@@ -34,13 +43,18 @@ namespace RPG.Control
                 // CombatTarget (có thể bị chọn làm mục tiêu tấn công)
                 // và click chuột trái vào đó thì sẽ phát lệnh cho Player tấn công
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null) continue;
+                
+                // Nếu ta "Can't Attack" mà Raycast va phải thì ta bỏ qua và xét tới các object đằng sau nó
+                if (!_fighter.CanAttack(target)) 
+                {
+                    continue;
+                }
 
                 // Is left mouse clicked
                 if (Input.GetMouseButtonDown(0))
                 {
                     // Attack if it is 
-                    GetComponent<Fighter>().Attack(target); //Get our sibling component
+                    _fighter.Attack(target); //Get our sibling component
                     
                 }
 
@@ -62,7 +76,7 @@ namespace RPG.Control
             if (hasHit == true)
             {
                 if (Input.GetMouseButton(0))
-                    GetComponent<Mover>().StartMoveAction(hit.point);
+                    _mover.StartMoveAction(hit.point);
 
                 return true;
             }
