@@ -10,6 +10,13 @@ namespace RPG.Combat
         Animator _animator;
         string a_die = "die";
         bool _isDead = false;
+
+        //Getters
+        public bool IsDead()
+        {
+            return _isDead;
+        }
+
         void Start()
         {
             _animator = GetComponent<Animator>();
