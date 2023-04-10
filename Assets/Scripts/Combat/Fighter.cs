@@ -85,7 +85,7 @@ namespace RPG.Combat
             return Vector3.Distance(_target.transform.position, transform.position) <= _weaponRange;
         }
 
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
 
 
@@ -102,7 +102,7 @@ namespace RPG.Combat
             return targetToTest != null && !targetToTest.IsDead();
         }
 
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             
             _actionScheduler.StartAction(this);

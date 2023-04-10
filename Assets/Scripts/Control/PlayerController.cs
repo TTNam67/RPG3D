@@ -39,12 +39,13 @@ namespace RPG.Control
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
-                // Nếu con trỏ chuột hover vào 1 object có chứa
-                // CombatTarget và click chuột trái vào đó thì sẽ phát lệnh cho Player tấn công
+                // Nếu con trỏ chuột hover vào 1 object không chứa CombatTarget (click vào bản thân, NPC, terrain,...)
+                // thì xét tới các object tiếp theo
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                
+                if (target == null) continue;
+
                 // Nếu ta "Can't Attack" mà Raycast va phải thì ta bỏ qua và xét tới các object đằng sau nó
-                if (!_fighter.CanAttack(target)) 
+                if (!_fighter.CanAttack(target.gameObject)) 
                 {
                     continue;
                 }
@@ -53,7 +54,7 @@ namespace RPG.Control
                 if (Input.GetMouseButtonDown(1))
                 {
                     // Attack if it is 
-                    _fighter.Attack(target); //Get our sibling component
+                    _fighter.Attack(target.gameObject); //Get our sibling component
                 }
 
                 // If there is at least 1 CombatTarget on the way, return true
