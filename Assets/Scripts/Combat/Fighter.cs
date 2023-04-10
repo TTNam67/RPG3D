@@ -15,8 +15,9 @@ namespace RPG.Combat
         string a_Attack = "attack";
         [SerializeField] private float _weaponRange = 2.0f;
         [SerializeField] private float _timeBetweenAttacks = 1.0f;
+        [SerializeField] float _punchDamage = 5f;
+
         float _timeSinceLastAttack = 0.0f;
-        float _punchDamage = 5f;
 
         private void Start() 
         {
