@@ -50,7 +50,7 @@ namespace RPG.Control
                 }
 
                 // Is left mouse clicked
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(1))
                 {
                     // Attack if it is 
                     _fighter.Attack(target); //Get our sibling component
@@ -73,7 +73,7 @@ namespace RPG.Control
 
             if (hasHit == true)
             {
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(1))
                     _mover.StartMoveAction(hit.point);
 
                 return true;
