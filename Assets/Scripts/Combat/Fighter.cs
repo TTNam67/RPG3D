@@ -40,6 +40,7 @@ namespace RPG.Combat
             if (_target == null) return;
             if (_target.IsDead()) return;
 
+
             if (!GetIsInRange())
             {
                 _mover.MoveTo(_target.transform.position);
