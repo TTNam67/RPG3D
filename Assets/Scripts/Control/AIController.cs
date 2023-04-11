@@ -10,12 +10,14 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] private float _chaseDistance = 5f;
+        [SerializeField] private float _suspicionTime = 5f;
         Fighter _fighter;
         GameObject _player;
         Health _health;
         Mover _mover;
         ActionScheduler _actionScheduler;
         Vector3 _guardPosition;
+        float _timeSinceLastSawPlayer = Mathf.Infinity;
 
         private void Start() 
         {
@@ -35,6 +37,10 @@ namespace RPG.Control
             if (_mover == null)
                 Debug.LogWarning("AIController.cs: Mover is not found");
 
+            _actionScheduler = GetComponent<ActionScheduler>();
+            if (_actionScheduler == null)
+                Debug.LogWarning("AIController.cs: ActionScheduler is not found");
+
             _guardPosition = transform.position;
         }
 
@@ -47,12 +53,34 @@ namespace RPG.Control
 
             if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
             {
-                _fighter.Attack(_player);
+                _timeSinceLastSawPlayer = 0;
+                AttackBehaviour();
             }
-            else 
+            else if (!InAttackRangeOfPlayer() && _timeSinceLastSawPlayer < _suspicionTime)
             {
-                _mover.StartMoveAction(_guardPosition);
+                SuspicionBehaviour();
             }
+            else
+            {
+                GuardBehaviour();
+            }
+
+            _timeSinceLastSawPlayer += Time.deltaTime;
+        }
+
+        private void GuardBehaviour()
+        {
+            _mover.StartMoveAction(_guardPosition);
+        }
+
+        private void SuspicionBehaviour()
+        {
+            _actionScheduler.CancelCurrentAction();
+        }
+
+        private void AttackBehaviour()
+        {
+            _fighter.Attack(_player);
         }
 
         private bool InAttackRangeOfPlayer()
