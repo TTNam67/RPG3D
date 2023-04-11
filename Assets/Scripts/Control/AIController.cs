@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Combat;
 using RPG.Core;
+using RPG.Movement;
 using UnityEngine;
 
 namespace RPG.Control
@@ -12,6 +13,9 @@ namespace RPG.Control
         Fighter _fighter;
         GameObject _player;
         Health _health;
+        Mover _mover;
+        ActionScheduler _actionScheduler;
+        Vector3 _guardPosition;
 
         private void Start() 
         {
@@ -26,6 +30,12 @@ namespace RPG.Control
             _health = GetComponent<Health>();
             if (_health == null)
                 Debug.LogWarning("AIController.cs: Health is not found");
+
+            _mover = GetComponent<Mover>();
+            if (_mover == null)
+                Debug.LogWarning("AIController.cs: Mover is not found");
+
+            _guardPosition = transform.position;
         }
 
         private void Update()
@@ -41,7 +51,7 @@ namespace RPG.Control
             }
             else 
             {
-                _fighter.Cancel();
+                _mover.StartMoveAction(_guardPosition);
             }
         }
 
