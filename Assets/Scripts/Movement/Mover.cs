@@ -13,6 +13,7 @@ namespace RPG.Movement
         ActionScheduler _actionScheduler; 
         Animator _animator;
         Health _health;
+        
 
         private void Start()
         {
@@ -31,6 +32,9 @@ namespace RPG.Movement
             _health = GetComponent<Health>();
             if (_health == null)
                 Debug.LogWarning("Mover.cs: Health is not found!");
+
+
+            // private static readonly int idle = _animator.GetHashCode();
         }
 
         void Update()
@@ -38,6 +42,9 @@ namespace RPG.Movement
             _navMeshAgent.enabled = !_health.IsDead();
 
             UpdateAnimator();
+
+            
+
 
         }
 

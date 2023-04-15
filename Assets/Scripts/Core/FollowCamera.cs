@@ -10,7 +10,7 @@ namespace RPG.Core
 
         void LateUpdate()
         {
-            transform.position = _target.position;
+            transform.position = _target.position + new Vector3(0f, 5f, 0f);
         }
     }
 }

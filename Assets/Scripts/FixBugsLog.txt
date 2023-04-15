@@ -9,3 +9,6 @@ này rõ hơn
 
 - Bug 2:
 + Player và Enemy khi chết vẫn dy chuyển xung quanh được, enemy vẫn bám theo player
+
+- Bug 3:
++ Khi player đánh chết enemy rồi thì vẫn tấn công thêm 1 lần nữa rồi mới dừng

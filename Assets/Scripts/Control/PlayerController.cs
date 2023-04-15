@@ -15,6 +15,7 @@ namespace RPG.Control
         Fighter _fighter;
         Mover _mover;
         Health _health;
+        [SerializeField]Camera _camera;
         void Start()
         {
             _fighter = GetComponent<Fighter>();
@@ -37,16 +38,21 @@ namespace RPG.Control
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
 
-            Debug.Log("Nothing to do");
+            // Debug.Log("Nothing to do");
         }
 
         private bool InteractWithCombat()
         {
+
+
             //hits: danh sách các RaycastHit được tạo ra từ việc 1 Ray (xuất phát từ
             // camera) va chạm với các GameObject trên đường đi của nó
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
+                Debug.Log("Dis" + hit.distance);
+                // Gizmos.color = Color.blue;
+                // Gizmos.DrawLine(_camera.transform.position, hit.point);
                 // Nếu con trỏ chuột hover vào 1 object không chứa CombatTarget (click vào bản thân, NPC, terrain,...)
                 // thì xét tới các object tiếp theo
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
@@ -97,4 +103,6 @@ namespace RPG.Control
         }
     }
 }
+
+
 
