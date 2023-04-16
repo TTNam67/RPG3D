@@ -89,7 +89,7 @@ namespace RPG.Control
             if (hasHit == true)
             {
                 if (Input.GetMouseButton(1))
-                    _mover.StartMoveAction(hit.point);
+                    _mover.StartMoveAction(hit.point, 1f);
 
                 return true;
             }

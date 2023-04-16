@@ -5,6 +5,7 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -15,12 +16,15 @@ namespace RPG.Control
         [SerializeField] PatrolPath _patrolPath;
         [SerializeField] float _waypointTolerance = 1f;
         [SerializeField] float _waypointDwellTime = 1.5f;
+        [Range(0, 1)]
+        [SerializeField] float _patrolSpeedFraction = 0.2f; //20% of maxSpeed
         Fighter _fighter;
         GameObject _player;
         Health _health;
         Mover _mover;
         ActionScheduler _actionScheduler;
         Vector3 _guardPosition;
+        NavMeshAgent _navMeshAgent;
         float _timeSinceLastSawPlayer = Mathf.Infinity;
         float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
         int _currentWaypointIndex = 0;
@@ -46,6 +50,10 @@ namespace RPG.Control
             _actionScheduler = GetComponent<ActionScheduler>();
             if (_actionScheduler == null)
                 Debug.LogWarning("AIController.cs: ActionScheduler is not found");
+
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+            if (_navMeshAgent == null)
+                Debug.LogWarning("AIController.cs: NavMeshAgent is not found");
 
             _guardPosition = transform.position;
         }
@@ -82,6 +90,7 @@ namespace RPG.Control
 
         private void PatrolBehaviour()
         {
+            
             Vector3 nextPosition = _guardPosition;
             if (_patrolPath != null)
             {
@@ -95,7 +104,7 @@ namespace RPG.Control
 
             if (_timeSinceArrivedAtWaypoint > _waypointDwellTime)
             {
-                _mover.StartMoveAction(nextPosition);
+                _mover.StartMoveAction(nextPosition, _patrolSpeedFraction);
                 
             }
         }
