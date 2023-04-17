@@ -41,7 +41,7 @@ namespace RPG.Combat
             if (_target.IsDead()) return;
 
 
-            if (!GetIsInRange())
+            if (!GetIsInAttackRange())
             {
                 _mover.MoveTo(_target.transform.position, 1f);
             }
@@ -52,7 +52,7 @@ namespace RPG.Combat
             }
         }
 
-        
+
 
         private void AttackBehaviour()
         {
@@ -79,7 +79,7 @@ namespace RPG.Combat
             _target.TakeDamage(_punchDamage);
         }
 
-        private bool GetIsInRange()
+        private bool GetIsInAttackRange()
         {
             return Vector3.Distance(_target.transform.position, transform.position) <= _weaponRange;
         }

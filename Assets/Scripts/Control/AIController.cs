@@ -105,7 +105,6 @@ namespace RPG.Control
             if (_timeSinceArrivedAtWaypoint > _waypointDwellTime)
             {
                 _mover.StartMoveAction(nextPosition, _patrolSpeedFraction);
-                
             }
         }
 
@@ -132,6 +131,7 @@ namespace RPG.Control
 
         private void AttackBehaviour()
         {
+            
             _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_player);
         }
