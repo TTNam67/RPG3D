@@ -15,4 +15,6 @@ The objective of the game is to rescue the princess and bring her back to the sa
 with a treasure as a bounty.
 
 ## Game Preview
-<img src="Captures/RPG3D.gif" alt="RPG3D" width="400" />
+![RPG3D Preview](Captures/RPG3D.gif)
+
+
