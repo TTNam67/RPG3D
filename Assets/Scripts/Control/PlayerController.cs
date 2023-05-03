@@ -50,7 +50,6 @@ namespace RPG.Control
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
-                Debug.Log("Dis" + hit.distance);
                 // Gizmos.color = Color.blue;
                 // Gizmos.DrawLine(_camera.transform.position, hit.point);
                 // Nếu con trỏ chuột hover vào 1 object không chứa CombatTarget (click vào bản thân, NPC, terrain,...)
