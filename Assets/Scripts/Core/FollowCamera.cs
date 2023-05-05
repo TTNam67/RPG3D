@@ -8,9 +8,18 @@ namespace RPG.Core
     {
         [SerializeField] Transform _target;
 
+        float _rotateSpeed = 50f;
+
+        // Player completes the move, then camera follows back 
         void LateUpdate()
         {
-            transform.position = _target.position + new Vector3(0f, 5f, 0f);
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.RotateAround(_target.transform.position, Vector3.up, -_rotateSpeed * Time.deltaTime);
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+                transform.RotateAround(_target.transform.position, Vector3.up, _rotateSpeed * Time.deltaTime);
+           
         }
     }
 }

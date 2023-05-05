@@ -11,24 +11,32 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-
+        Vector3 _defaultPosition = new Vector3(81f, 0f, 78f);
         Fighter _fighter;
         Mover _mover;
         Health _health;
+        Rigidbody _rigidbody;
+
         [SerializeField]Camera _camera;
         void Start()
         {
+            // this.transform.position = _defaultPosition;
+
             _fighter = GetComponent<Fighter>();
             if (_fighter == null)
-                Debug.LogWarning("PlayerController.cs: Fighter is not found");
+                Debug.LogWarning(transform.name + " PlayerController.cs: Fighter is not found");
 
             _mover = GetComponent<Mover>();
             if (_mover == null)
-                Debug.LogWarning("PlayerController.cs: Mover is not found");
+                Debug.LogWarning(transform.name + " PlayerController.cs: Mover is not found");
 
             _health = GetComponent<Health>();
             if (_health == null)
-                Debug.LogWarning("PlayerController.cs: Health is not found");
+                Debug.LogWarning(transform.name + " PlayerController.cs: Health is not found");
+
+            _rigidbody = GetComponent<Rigidbody>();
+            if (_rigidbody == null)
+                Debug.LogWarning(transform.name + " PlayerController.cs: Rigidbody is not found");
         }
 
         void Update()
@@ -37,14 +45,10 @@ namespace RPG.Control
 
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
-
-            // Debug.Log("Nothing to do");
         }
 
         private bool InteractWithCombat()
         {
-
-
             //hits: danh sách các RaycastHit được tạo ra từ việc 1 Ray (xuất phát từ
             // camera) va chạm với các GameObject trên đường đi của nó
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
@@ -102,6 +106,4 @@ namespace RPG.Control
         }
     }
 }
-
-
 

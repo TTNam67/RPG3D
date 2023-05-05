@@ -15,15 +15,11 @@ namespace RPG.Cinematics
             _playableDirector.Stop();
         }
 
-        private void Start() 
+        private void Awake() 
         {
             _playableDirector = GetComponent<PlayableDirector>();
             if (_playableDirector == null)    
                 Debug.LogError("CinematicTrigger.cs: PlayableDirector is not found");
-        }
-        private void Awake() 
-        {
-
         }
 
         private void OnTriggerEnter(Collider other) 
