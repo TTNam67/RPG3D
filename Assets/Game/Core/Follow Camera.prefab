@@ -89,7 +89,7 @@ MonoBehaviour:
   m_LookaheadTime: 0.129
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_XDamping: 2.9
+  m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
   m_TargetMovementOnly: 1
@@ -97,13 +97,13 @@ MonoBehaviour:
   m_ScreenY: 0.5
   m_CameraDistance: 10
   m_DeadZoneWidth: 0.32
-  m_DeadZoneHeight: 0.13
+  m_DeadZoneHeight: 0.16
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
+  m_SoftZoneWidth: 0.87
   m_SoftZoneHeight: 0.68
   m_BiasX: 0
-  m_BiasY: 0.07400003
+  m_BiasY: 0.07400008
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3886117334400748568}
   - component: {fileID: 3886117334400748571}
+  - component: {fileID: 1582666103}
   m_Layer: 0
   m_Name: Follow Camera
   m_TagString: Untagged
@@ -140,7 +141,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886117334400748569}
-  m_LocalRotation: {x: 0.0038365813, y: -0.94240975, z: 0.334235, w: 0.011672182}
+  m_LocalRotation: {x: 0.003837424, y: -0.9424088, z: 0.33423743, w: 0.011671531}
   m_LocalPosition: {x: 80.7744, y: 6.9406333, z: 85.673065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -187,3 +188,16 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 3886117333599865020}
+--- !u!114 &1582666103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886117334400748569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb445559a9eb8e478209e89eefabd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
