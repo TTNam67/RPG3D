@@ -15,7 +15,6 @@ namespace RPG.Control
         public float bounceForce = 50f; // Force of the bounce
         public float bounceDelay = 0.03f; // Delay before bouncing starts
         private bool isBouncing = false;
-        Vector3 _defaultPosition = new Vector3(81f, 5f, 78f);
         Fighter _fighter;
         Mover _mover;
         Health _health;
@@ -24,7 +23,6 @@ namespace RPG.Control
         [SerializeField]Camera _camera;
         void Start()
         {
-            this.transform.position = _defaultPosition;
 
             _fighter = GetComponent<Fighter>();
             if (_fighter == null)
@@ -108,33 +106,6 @@ namespace RPG.Control
         {
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            print("Force:" + collision.impulse.magnitude);
-            if (collision.impulse.magnitude > 4f && !isBouncing) // Only bounce if the impact is strong enough
-            {
-                ContactPoint cP = collision.contacts[0];
-                float fallDistance = transform.position.y - cP.point.y;
-                print("Fall: " + fallDistance);
-                print(cP.thisCollider.name + " hit " + cP.otherCollider.name);
-
-                if (fallDistance > maxFallDistance)
-                {
-                    Invoke("StartBouncing", bounceDelay);
-                }
-            }
-        }
-
-
-        private void StartBouncing()
-        {
-            isBouncing = true;
-            _rigidbody.AddForce(new Vector3(0f, 12f, 0f) * bounceForce, ForceMode.Impulse);
-        }
-
-        
-
     }
 }
 
