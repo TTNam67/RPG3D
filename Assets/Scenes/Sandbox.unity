@@ -1282,6 +1282,10 @@ PrefabInstance:
       propertyPath: _sceneIndexToLoad
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1963692231442467792, guid: e71a08cc213836645804cabf2d458e7c, type: 3}
+      propertyPath: _destinationIdentifier
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4026329538822918179, guid: e71a08cc213836645804cabf2d458e7c, type: 3}
       propertyPath: m_RootOrder
       value: 1

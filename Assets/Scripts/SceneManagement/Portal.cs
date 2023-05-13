@@ -10,8 +10,14 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        enum DestinationIdentifier
+        {
+            A, B, C, D, E
+        }
+
         [SerializeField] int _sceneIndexToLoad = -1;
         [SerializeField] Transform _spawnPoint;
+        [SerializeField] DestinationIdentifier _destinationIdentifier;
         private void OnTriggerEnter(Collider other) 
         {
             if (other.tag == "Player")
@@ -22,6 +28,12 @@ namespace RPG.SceneManagement
 
         private IEnumerator Transition()
         {
+            if (_sceneIndexToLoad < 0) 
+            {
+                Debug.LogError("The sceneIndexToLoad is invalid");
+                yield break;
+            }
+
             DontDestroyOnLoad(this.gameObject);
             yield return SceneManager.LoadSceneAsync(_sceneIndexToLoad); 
 
@@ -61,6 +73,8 @@ namespace RPG.SceneManagement
             {
                 // if we found the current portal, do nothing
                 if (portal == this) continue; 
+                if (portal._destinationIdentifier != this._destinationIdentifier) continue;
+
                 return portal; // The portal we tending to teleport to
             }
 

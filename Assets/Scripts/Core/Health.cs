@@ -32,7 +32,7 @@ namespace RPG.Core
         public void TakeDamage(float damage)
         {
             _healthPoint = Mathf.Max(_healthPoint - damage, 0);
-            if (_healthPoint == 0)
+            if (_healthPoint ==  0)
             {
                 Die();
             }
