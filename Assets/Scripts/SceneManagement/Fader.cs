@@ -14,15 +14,6 @@ namespace RPG.SceneManagement
             if (_canvasGroup == null)    
                 Debug.LogError("Fader.cs: CanvasGroup is not found!");
 
-            StartCoroutine(FadeOutIn());
-        }
-
-        IEnumerator FadeOutIn()
-        {
-            yield return FadeOut(1.5f); //It should wait until FadeOut() has finished
-            print("Faded out");
-            yield return FadeIn(1f); 
-            print("Faded in");
         }
 
         public IEnumerator FadeOut(float time) // time: the time it takes to perform a fadeOut

@@ -18,6 +18,9 @@ namespace RPG.SceneManagement
         [SerializeField] int _sceneIndexToLoad = -1;
         [SerializeField] Transform _spawnPoint;
         [SerializeField] DestinationIdentifier _destinationIdentifier;
+        [SerializeField] float _fadeOutTime = 1.2f;
+        [SerializeField] float _fadeInTime = 1.6f;
+        [SerializeField] float _fadeWaitTime = 0.5f;
         private void OnTriggerEnter(Collider other) 
         {
             if (other.tag == "Player")
@@ -33,12 +36,21 @@ namespace RPG.SceneManagement
                 Debug.LogError("The sceneIndexToLoad is invalid");
                 yield break;
             }
-
+ 
             DontDestroyOnLoad(this.gameObject);
-            yield return SceneManager.LoadSceneAsync(_sceneIndexToLoad); 
+
+            Fader fader = FindObjectOfType<Fader>();
+
+            yield return fader.FadeOut(_fadeOutTime);
+            yield return SceneManager.LoadSceneAsync(_sceneIndexToLoad); // Start load the new scene 
 
             Portal otherPortal = GetOtherPortal(); // The portal where we want to teleport to
             UpdatePlayer(otherPortal);
+
+
+            // We do the setup: move the player,.. Then we waiting for small amount of time for the camera to stabilize 
+            yield return new WaitForSeconds(_fadeWaitTime);
+            yield return fader.FadeIn(_fadeInTime);
 
             Destroy(this.gameObject);
         }
