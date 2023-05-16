@@ -31,27 +31,35 @@ namespace RPG.SceneManagement
 
         private IEnumerator Transition()
         {
+            // 
             if (_sceneIndexToLoad < 0) 
             {
                 Debug.LogError("The sceneIndexToLoad is invalid");
                 yield break;
             }
  
+            // this object is not be destroyed so that we don't get rid of the portal until the new world has loaded up
             DontDestroyOnLoad(this.gameObject);
 
+            // Then, we finding our fader and we are fading out gradually over time 
             Fader fader = FindObjectOfType<Fader>();
-
             yield return fader.FadeOut(_fadeOutTime);
+
+            // After finish fading out, we will load the next Scene
             yield return SceneManager.LoadSceneAsync(_sceneIndexToLoad); // Start load the new scene 
 
+            // Once the loading is finished, we are finding our corresponding portal, updating the player's status
             Portal otherPortal = GetOtherPortal(); // The portal where we want to teleport to
             UpdatePlayer(otherPortal);
 
 
-            // We do the setup: move the player,.. Then we waiting for small amount of time for the camera to stabilize 
+            // Then we waiting for small amount of time for the camera to stabilize 
             yield return new WaitForSeconds(_fadeWaitTime);
+
+            // Then we fading back in
             yield return fader.FadeIn(_fadeInTime);
 
+            // Finally, destroy this portal
             Destroy(this.gameObject);
         }
 
